@@ -11,27 +11,29 @@ import { BackToTop } from '@/components/ui/BackToTop';
 // Fetch data from API
 async function getContactData() {
   try {
-    const [profileRes, socialRes, servicesRes] = await Promise.all([
-      fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/portfolio`, { 
+    const baseUrl = process.env.NEXTAUTH_URL || 'http://localhost:3000';
+    
+    const [portfolioRes, socialRes, servicesRes] = await Promise.all([
+      fetch(`${baseUrl}/api/portfolio`, { 
         cache: 'no-store' 
       }),
-      fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/admin/social-media`, { 
+      fetch(`${baseUrl}/api/admin/social-media`, { 
         cache: 'no-store' 
       }),
-      fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/admin/services`, { 
+      fetch(`${baseUrl}/api/admin/services`, { 
         cache: 'no-store' 
       })
     ]);
 
-    const [profile, socialMedia, services] = await Promise.all([
-      profileRes.json(),
+    const [portfolioData, socialMedia, services] = await Promise.all([
+      portfolioRes.json(),
       socialRes.json(),
       servicesRes.json()
     ]);
 
     return {
-      profile: profile.data || getDefaultProfile(),
-      socialMedia: socialMedia.data || [],
+      profile: portfolioData.profile || getDefaultProfile(),
+      socialMedia: socialMedia.data || portfolioData.socialMedia || getDefaultSocialMedia(),
       services: services.data || getDefaultServices()
     };
   } catch (error) {
