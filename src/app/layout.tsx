@@ -6,7 +6,7 @@ import { Providers } from './providers';
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-  title: 'Portfolio - John Doe',
+  title: 'Portfolio - Putri Suci Renita',
   description: 'Full Stack Developer Portfolio',
   metadataBase: new URL('http://localhost:3000'),
 };

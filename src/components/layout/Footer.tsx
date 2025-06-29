@@ -59,7 +59,6 @@ export const Footer: React.FC<FooterProps> = ({ socialMedia }) => {
 
           {/* Social Media */}
           <div>
-            <h4 className="text-lg font-semibold mb-4">Connect</h4>
             <div className="flex space-x-4">
               {socialMedia.filter(social => social.active).map((social) => (
                 <a

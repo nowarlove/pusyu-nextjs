@@ -32,7 +32,7 @@ async function getPortfolioData() {
         title: "Full Stack Developer", 
         description: "Welcome to my portfolio",
         photo: "/placeholder-avatar.jpg",
-        location: "Jakarta, Indonesia",
+        location: "Kepualan Riau, Indonesia",
         email: "contact@example.com"
       },
       skills: [],

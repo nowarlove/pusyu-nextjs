@@ -3,15 +3,23 @@ import { useState } from 'react';
 import { PhotoIcon, CloudArrowUpIcon } from '@heroicons/react/24/outline';
 
 interface ImageUploadProps {
-  value: string;
+  value: string | null | undefined;
   onChange: (url: string) => void;
   label?: string;
   placeholder?: string;
 }
 
-export default function ImageUpload({ value, onChange, label = "Image", placeholder = "Enter image URL or upload file" }: ImageUploadProps) {
+export default function ImageUpload({ 
+  value, 
+  onChange, 
+  label = "Image", 
+  placeholder = "Enter image URL or upload file" 
+}: ImageUploadProps) {
   const [uploading, setUploading] = useState(false);
   const [uploadMethod, setUploadMethod] = useState<'url' | 'upload'>('url');
+
+  // Ensure value is always a string, never null
+  const safeValue = value || '';
 
   const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -75,7 +83,7 @@ export default function ImageUpload({ value, onChange, label = "Image", placehol
         /* URL Input */
         <input
           type="url"
-          value={value}
+          value={safeValue}
           onChange={(e) => onChange(e.target.value)}
           className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
           placeholder={placeholder}
@@ -107,10 +115,10 @@ export default function ImageUpload({ value, onChange, label = "Image", placehol
             <span className="text-sm text-gray-500">or drag and drop</span>
           </div>
           
-          {value && (
+          {safeValue && (
             <input
               type="text"
-              value={value}
+              value={safeValue}
               onChange={(e) => onChange(e.target.value)}
               className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
               placeholder="Generated URL will appear here"
@@ -120,11 +128,11 @@ export default function ImageUpload({ value, onChange, label = "Image", placehol
       )}
 
       {/* Preview */}
-      {value && (
+      {safeValue && (
         <div className="mt-3">
           <div className="relative w-32 h-32 border-2 border-dashed border-gray-300 rounded-lg overflow-hidden">
             <img
-              src={value}
+              src={safeValue}
               alt="Preview"
               className="w-full h-full object-cover"
               onError={(e) => {

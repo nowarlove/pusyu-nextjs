@@ -53,7 +53,19 @@ export default function ProfileManagementPage() {
       if (response.ok) {
         const data = await response.json();
         if (data) {
-          setProfile(data);
+          // Handle null values by converting them to empty strings
+          setProfile({
+            id: data.id,
+            name: data.name || '',
+            title: data.title || '',
+            description: data.description || '',
+            email: data.email || '',
+            phone: data.phone || '',
+            location: data.location || '',
+            website: data.website || '',
+            photo: data.photo || '',
+            resume: data.resume || '',
+          });
         }
       }
     } catch (error) {
@@ -90,7 +102,7 @@ export default function ProfileManagementPage() {
   };
 
   const handleInputChange = (field: keyof ProfileData, value: string) => {
-    setProfile(prev => ({ ...prev, [field]: value }));
+    setProfile(prev => ({ ...prev, [field]: value || '' }));
   };
 
   if (status === 'loading' || loading) {

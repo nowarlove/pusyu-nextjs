@@ -2,9 +2,10 @@
 
 import React from 'react';
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/Button';
 import { Section } from '@/components/ui/Section';
-import { Download, Mail, MapPin, ArrowDown } from 'lucide-react';
+import { Mail, MapPin, ArrowDown } from 'lucide-react';
 
 interface HeroProps {
   profile: {
@@ -19,10 +20,28 @@ interface HeroProps {
 }
 
 export const HeroImproved: React.FC<HeroProps> = ({ profile }) => {
-  const scrollToSkills = () => {
-    const skillsSection = document.getElementById('skills');
-    skillsSection?.scrollIntoView({ behavior: 'smooth' });
+  const router = useRouter();
+
+  const handleContactMe = () => {
+    router.push('/contact');
   };
+
+  const scrollToProjects = () => {
+    // Add small delay to ensure page is fully loaded
+    setTimeout(() => {
+      const projectsSection = document.getElementById('projects');
+      if (projectsSection) {
+        projectsSection.scrollIntoView({ 
+          behavior: 'smooth',
+          block: 'start'
+        });
+      } else {
+        console.log('Projects section not found');
+      }
+    }, 100);
+  };
+
+
 
   return (
     <Section background="gradient" className="min-h-screen flex items-center justify-center pt-16">
@@ -47,20 +66,18 @@ export const HeroImproved: React.FC<HeroProps> = ({ profile }) => {
             </div>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start mb-8">
-              <Button size="lg" className="gap-2 focus-ring">
+              <Button 
+                size="lg" 
+                className="gap-2 focus-ring"
+                onClick={handleContactMe}
+              >
                 <Mail size={18} />
                 Contact Me
               </Button>
-              {profile.resume && (
-                <Button variant="outline" size="lg" className="gap-2 focus-ring">
-                  <Download size={18} />
-                  Download CV
-                </Button>
-              )}
             </div>
 
             <button 
-              onClick={scrollToSkills}
+              onClick={scrollToProjects}
               className="hidden lg:flex items-center gap-2 text-gray-600 hover:text-blue-600 transition-colors focus-ring rounded-lg p-2"
             >
               <span>Explore my work</span>

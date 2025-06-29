@@ -1,0 +1,50 @@
+srv886216.hstgr.cloud
+PutriSuci2415@@
+
+name_Server 156.67.221.33;
+
+
+PM2 pusyuw_portfolio
+
+
+user portfolio
+password 123
+
+
+mysql_Server vps
+CREATE DATABASE portfolio_db CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+CREATE USER 'portfolio_user'@'localhost' IDENTIFIED BY 'secure_db_password_123';
+GRANT ALL PRIVILEGES ON portfolio_db.* TO 'portfolio_user'@'localhost';
+FLUSH PRIVILEGES;
+EXIT;
+
+
+# Database
+DATABASE_URL="mysql://portfolio_user:secure_db_password_123@localhost:3306/portfolio_db"
+
+# NextAuth - Using IP temporarily
+NEXTAUTH_URL="http://156.67.221.33"
+NEXTAUTH_SECRET="super-secret-nextauth-key-production-2024"
+
+# JWT
+JWT_SECRET="super-secret-jwt-key-production-2024"
+
+# Base URL for API calls - Using IP temporarily
+NEXT_PUBLIC_BASE_URL="http://156.67.221.33"
+
+# Email (configure with your actual email settings)
+EMAIL_SERVER_HOST="smtp.gmail.com"
+EMAIL_SERVER_PORT=587
+EMAIL_SERVER_USER="your-email@gmail.com"
+EMAIL_SERVER_PASSWORD="your-app-password"
+EMAIL_FROM="your-email@gmail.com"
+
+# File Upload
+UPLOAD_DIR="./public/uploads"
+MAX_FILE_SIZE=5242880
+
+# Rate limiting
+RATE_LIMIT_MAX=10
+RATE_LIMIT_WINDOW=900000
+
+
